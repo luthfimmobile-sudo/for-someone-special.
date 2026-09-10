@@ -9,41 +9,66 @@
     <style>
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #0b0708 0%, #1a0f12 50%, #2b1117 100%);
+            background: linear-gradient(135deg, #070506 0%, #140b0e 50%, #220c11 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             overflow: hidden;
+            position: relative;
+        }
+        /* Efek hujan hati berjatuhan di latar belakang */
+        .falling-heart {
+            position: absolute;
+            color: rgba(255, 77, 109, 0.4);
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
         }
         .card {
-            background: rgba(20, 15, 17, 0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(18, 12, 14, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 35px 25px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.15), inset 0 0 15px rgba(255, 182, 193, 0.05);
+            border-radius: 30px;
+            /* Garis tepi luar gradasi neon pink lembut */
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.12), 
+                        inset 0 0 20px rgba(255, 182, 193, 0.02);
             text-align: center;
             max-width: 350px;
             width: 85%;
-            border: 1px solid rgba(255, 77, 109, 0.3);
+            border: 1px solid rgba(255, 77, 109, 0.25);
             box-sizing: border-box;
-            max-height: 85vh;
+            max-height: 80vh;
             overflow-y: auto;
             color: #f7e6e9;
+            z-index: 10;
+            position: relative;
         }
-        h1 { color: #ff4d6d; font-size: 22px; margin-top: 0; margin-bottom: 15px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 77, 109, 0.3); }
+        /* Mengubah scrollbar agar minimalis dan cocok dengan tema hitam */
+        .card::-webkit-scrollbar { width: 4px; }
+        .card::-webkit-scrollbar-thumb { background: rgba(255, 77, 109, 0.3); border-radius: 10px; }
+        
+        h1 { color: #ff4d6d; font-size: 24px; margin-top: 0; margin-bottom: 20px; font-weight: 700; text-shadow: 0 0 12px rgba(255, 77, 109, 0.4); }
         
         .typewriter-container {
             text-align: justify;
             margin-bottom: 15px;
         }
         .typewriter-p { 
-            color: #e0cbd0; 
+            color: #e2d2d5; 
             line-height: 1.7; 
             font-size: 14.5px; 
             font-weight: 400; 
-            margin: 0 0 15px 0;
+            margin: 0 0 18px 0;
             display: block;
         }
 
@@ -53,16 +78,16 @@
             font-weight: 700; 
             text-align: center; 
             font-size: 16px; 
-            margin-top: 20px; 
-            text-shadow: 0 0 12px rgba(255, 77, 109, 0.5);
+            margin-top: 25px; 
+            text-shadow: 0 0 15px rgba(255, 77, 109, 0.6);
             display: block;
         }
         input {
             width: 85%;
-            padding: 12px;
+            padding: 14px;
             margin: 15px 0;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(255, 77, 109, 0.4);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 77, 109, 0.35);
             border-radius: 25px;
             text-align: center;
             outline: none;
@@ -74,31 +99,34 @@
         }
         input:focus {
             border-color: #ff4d6d;
-            box-shadow: 0 0 10px rgba(255, 77, 109, 0.3);
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.4);
+            background: rgba(255, 255, 255, 0.06);
         }
         button {
-            background-color: #ff4d6d;
+            background: linear-gradient(135deg, #ff4d6d 0%, #ff758f 100%);
             color: white;
             border: none;
-            padding: 12px 28px;
+            padding: 12px 32px;
             font-size: 15px;
             border-radius: 25px;
             cursor: pointer;
             font-weight: 700;
             margin: 15px 10px 0 10px;
             font-family: 'Quicksand', sans-serif;
-            box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
             transition: all 0.3s ease;
         }
         button:active {
             transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(255, 77, 109, 0.4);
         }
         .hidden { display: none !important; }
-        .heart { 
+        .heart-icon { 
             color: #ff4d6d; 
             font-size: 45px; 
-            margin-bottom: 10px; 
+            margin-bottom: 15px; 
             animation: float 3s ease-in-out infinite;
+            display: inline-block;
         }
         @keyframes float {
             0% { transform: translateY(0px); }
@@ -116,9 +144,9 @@
         <source src="menari-nari.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Halaman 1: Fitur Password (Kembali Normal & Centered) -->
+    <!-- Halaman 1: Fitur Password -->
     <div id="halaman1" class="card">
-        <div class="heart">🔒</div>
+        <div class="heart-icon">🔒</div>
         <h1>Eitss, Jawab Dulu! ✨</h1>
         <p class="text-center" style="color: #cbd5e1;">Pertanyaan: Apa panggilan kesayangan kita?</p>
         <input type="text" id="passwordInput" placeholder="Ketik jawabannya di sini...">
@@ -142,7 +170,7 @@
 
     <!-- Halaman 3: Kalimat Penutup Akhir -->
     <div id="halaman3" class="card hidden">
-        <div class="heart">💝</div>
+        <div class="heart-icon">💝</div>
         <h1>Isi Hatiku.. ✨</h1>
         <div class="typewriter-container">
             <p class="typewriter-p" id="p5"></p>
@@ -156,12 +184,12 @@
         let audioCtx;
 
         const texts = {
-            p1: "Hai senggg gimana kabar kamu? baik-baik aja kan? gaada yang gangguin ketenangan kamu? kalo iya Alhamdulillah aku ikut seneng dengernya.",
-            p2: "Maaf ya aku sampein nya disini karna aku gaenak mau chat kamu takut ngeganggu planning kamu atau apalah nantinya.",
-            p3: "Aku cuma mau bilang aku kangen sama kamu , aku kangen denger suara kamu , aku kangen videocallan sama kamu dan aku kangen semuanya tentang kamu.",
-            p4: "Menurut kamu salah ga sih yang aku rasain? kalo ga salah aku harus apa? aku udah gapunya akses lagi buat bisa tatapan muka sama kamu.",
-            p5: "Makasih ya udah baca isi hati aku dan aku minta maaf kalo aku kasih mengganggu kamu. Aku tarik kembali ucapan ku kemarin yang mau jaga jarak sama kamu kayaknya aku kalah sama ego ku sendiri dan masih berharap bisa berinteraksi sama kamu dan jadi sosok aku yang biasanya buat kamu ya at least sampe hari terbaiknya kamu.",
-            p6: "Kalo menurut kamu aku masih bisa buat interaksi sama kamu tolong vc aku ya.",
+            p1: "🌸 Hai senggg gimana kabar kamu? baik-baik aja kan? gaada yang gangguin ketenangan kamu? kalo iya Alhamdulillah aku ikut seneng dengernya.",
+            p2: "✨ Maaf ya aku sampein nya disini karna aku gaenak mau chat kamu takut ngeganggu planning kamu atau apalah nantinya.",
+            p3: "🌸 Aku cuma mau bilang aku kangen sama kamu , aku kangen denger suara kamu , aku kangen videocallan sama kamu dan aku kangen semuanya tentang kamu.",
+            p4: "✨ Menurut kamu salah ga sih yang aku rasain? kalo ga salah aku harus apa? aku udah gapunya akses lagi buat bisa tatapan muka sama kamu.",
+            p5: "🌹 Makasih ya udah baca isi hati aku dan aku minta maaf kalo aku kasih mengganggu kamu. Aku tarik kembali ucapan ku kemarin yang mau jaga jarak sama kamu kayaknya aku kalah sama ego ku sendiri dan masih berharap bisa berinteraksi sama kamu dan jadi sosok aku yang biasanya buat kamu ya at least sampe hari terbaiknya kamu.",
+            p6: "✨ Kalo menurut kamu aku masih bisa buat interaksi sama kamu tolong vc aku ya.",
             p7: "ILOVEYOU SO MUCH WANITA TERBAIK KU. 💖"
         };
 
@@ -181,7 +209,10 @@
                 document.getElementById('halaman1').classList.add('hidden');
                 document.getElementById('halaman2').classList.remove('hidden');
                 
-                // Mulai ngetik Halaman 2 dari paragraf 1 secara aman
+                // Mulai memunculkan hujan hati di latar belakang
+                mulaiHujanHati();
+                
+                // Mulai mengetik Halaman 2
                 mulaiKetikBerdasarUrutan(['p1', 'p2', 'p3', 'p4'], 0, () => {
                     document.getElementById('btnContainer1').classList.remove('hidden');
                     const card = document.getElementById('halaman2');
@@ -202,37 +233,5 @@
             let i = 0;
             const element = document.getElementById(elementId);
             element.innerHTML = "";
-            
-            // Mencari container card terdekat agar scroll tidak merusak layout global halaman utama
             const card = element.closest('.card');
             
-            function mengetik() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    if (card) {
-                        card.scrollTo({ top: card.scrollHeight, behavior: 'auto' });
-                    }
-                    setTimeout(mengetik, speed);
-                } else if (onComplete) {
-                    onComplete();
-                }
-            }
-            mengetik();
-        }
-
-        function mulaiKetikBerdasarUrutan(ids, index, finalCallback) {
-            if (index < ids.length) {
-                const currentId = ids[index];
-                ketikPerHuruf(currentId, texts[currentId], 45, () => {
-                    setTimeout(() => {
-                        mulaiKetikBerdasarUrutan(ids, index + 1, finalCallback);
-                    }, 500);
-                });
-            } else if (finalCallback) {
-                finalCallback();
-            }
-        }
-    </script>
-</body>
-</html>
