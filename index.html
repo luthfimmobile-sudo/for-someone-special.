@@ -9,7 +9,6 @@
     <style>
         body {
             font-family: 'Quicksand', sans-serif;
-            /* Latar belakang hitam pekat dengan sentuhan gradasi pink tua yang redup dan romantis */
             background: linear-gradient(135deg, #0b0708 0%, #1a0f12 50%, #2b1117 100%);
             display: flex;
             justify-content: center;
@@ -23,7 +22,6 @@
             backdrop-filter: blur(15px);
             padding: 35px 25px;
             border-radius: 25px;
-            /* Efek pantulan cahaya (glow) pink lembut di sekeliling kartu hitam */
             box-shadow: 0 10px 30px rgba(255, 77, 109, 0.15), inset 0 0 15px rgba(255, 182, 193, 0.05);
             text-align: center;
             max-width: 350px;
@@ -36,21 +34,17 @@
         }
         h1 { color: #ff4d6d; font-size: 22px; margin-top: 0; margin-bottom: 15px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 77, 109, 0.3); }
         
-        /* Pengaturan teks pesan agar keluar satu-satu secara berurutan */
+        .typewriter-container {
+            text-align: justify;
+            margin-bottom: 15px;
+        }
         .typewriter-p { 
             color: #e0cbd0; 
             line-height: 1.7; 
             font-size: 14.5px; 
             font-weight: 400; 
-            text-align: justify; 
-            margin-bottom: 15px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.8s ease;
-        }
-        .typewriter-p.visible {
-            opacity: 1;
-            transform: translateY(0);
+            margin: 0 0 15px 0;
+            display: block;
         }
 
         .text-center { text-align: center; }
@@ -61,6 +55,7 @@
             font-size: 16px; 
             margin-top: 20px; 
             text-shadow: 0 0 12px rgba(255, 77, 109, 0.5);
+            display: block;
         }
         input {
             width: 85%;
@@ -134,12 +129,13 @@
     <!-- Halaman 2: Isi Surat Pertama (Curhatan Kangen) -->
     <div id="halaman2" class="card">
         <h1>Dear Senggg 🌹</h1>
-        <p class="typewriter-p" id="p1">Hai senggg gimana kabar kamu? baik-baik aja kan? gaada yang gangguin ketenangan kamu? kalo iya Alhamdulillah aku ikut seneng dengernya.</p>
-        <p class="typewriter-p" id="p2">Maaf ya aku sampein nya disini karna aku gaenak mau chat kamu takut ngeganggu planning kamu atau apalah nantinya.</p>
-        <p class="typewriter-p" id="p3">Aku cuma mau bilang aku kangen sama kamu , aku kangen denger suara kamu , aku kangen videocallan sama kamu dan aku kangen semuanya tentang kamu.</p>
-        <p class="typewriter-p" id="p4">Menurut kamu salah ga sih yang aku rasain? kalo ga salah aku harus apa? aku udah gapunya akses lagi buat bisa tatapan muka sama kamu.</p>
-        
-        <div class="text-center typewriter-p" id="btnContainer1">
+        <div class="typewriter-container">
+            <p class="typewriter-p" id="p1"></p>
+            <p class="typewriter-p" id="p2"></p>
+            <p class="typewriter-p" id="p3"></p>
+            <p class="typewriter-p" id="p4"></p>
+        </div>
+        <div class="text-center hidden" id="btnContainer1">
             <button onclick="keHalamanTiga()">Lanjut ➡️</button>
         </div>
     </div>
@@ -148,17 +144,29 @@
     <div id="halaman3" class="card hidden">
         <div class="heart">💝</div>
         <h1>Isi Hatiku.. ✨</h1>
-        <p class="typewriter-p" id="p5">Makasih ya udah baca isi hati aku dan aku minta maaf kalo aku kasih mengganggu kamu. Aku tarik kembali ucapan ku kemarin yang mau jaga jarak sama kamu kayaknya aku kalah sama ego ku sendiri dan masih berharap bisa berinteraksi sama kamu dan jadi sosok aku yang biasanya buat kamu ya at least sampe hari terbaiknya kamu.</p>
-        <p class="typewriter-p" id="p6">Kalo menurut kamu aku masih bisa buat interaksi sama kamu tolong vc aku ya.</p>
-        <p class="typewriter-p iloveyou" id="p7">ILOVEYOU SO MUCH WANITA TERBAIK KU. 💖</p>
+        <div class="typewriter-container">
+            <p class="typewriter-p" id="p5"></p>
+            <p class="typewriter-p" id="p6"></p>
+            <p class="typewriter-p iloveyou" id="p7"></p>
+        </div>
     </div>
 
     <script>
-        // Sembunyikan halaman 2 dan 3 di awal
         document.getElementById('halaman2').classList.add('hidden');
 
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
+
+        // Teks asli yang akan diketik per huruf
+        const texts = {
+            p1: "Hai senggg gimana kabar kamu? baik-baik aja kan? gaada yang gangguin ketenangan kamu? kalo iya Alhamdulillah aku ikut seneng dengernya.",
+            p2: "Maaf ya aku sampein nya disini karna aku gaenak mau chat kamu takut ngeganggu planning kamu atau apalah nantinya.",
+            p3: "Aku cuma mau bilang aku kangen sama kamu , aku kangen denger suara kamu , aku kangen videocallan sama kamu dan aku kangen semuanya tentang kamu.",
+            p4: "Menurut kamu salah ga sih yang aku rasain? kalo ga salah aku harus apa? aku udah gapunya akses lagi buat bisa tatapan muka sama kamu.",
+            p5: "Makasih ya udah baca isi hati aku dan aku minta maaf kalo aku kasih mengganggu kamu. Aku tarik kembali ucapan ku kemarin yang mau jaga jarak sama kamu kayaknya aku kalah sama ego ku sendiri dan masih berharap bisa berinteraksi sama kamu dan jadi sosok aku yang biasanya buat kamu ya at least sampe hari terbaiknya kamu.",
+            p6: "Kalo menurut kamu aku masih bisa buat interaksi sama kamu tolong vc aku ya.",
+            p7: "ILOVEYOU SO MUCH WANITA TERBAIK KU. 💖"
+        };
 
         function cekPassword() {
             const input = document.getElementById('passwordInput').value.trim().toLowerCase();
@@ -176,8 +184,11 @@
                 document.getElementById('halaman1').classList.add('hidden');
                 document.getElementById('halaman2').classList.remove('hidden');
                 
-                // Memulai efek pemunculan teks satu per satu untuk Halaman 2
-                munculkanTeksBerurutan(['p1', 'p2', 'p3', 'p4', 'btnContainer1'], 0);
+                // Mulai ngetik Halaman 2 dari paragraf 1
+                mulaiKetikBerdasarUrutan(['p1', 'p2', 'p3', 'p4'], 0, () => {
+                    document.getElementById('btnContainer1').classList.remove('hidden');
+                    document.getElementById('btnContainer1').scrollIntoView({ behavior: 'smooth', block: 'end' });
+                });
             } else {
                 document.getElementById('pesanSalah').classList.remove('hidden');
             }
@@ -187,24 +198,42 @@
             document.getElementById('halaman2').classList.add('hidden');
             document.getElementById('halaman3').classList.remove('hidden');
             
-            // Memulai efek pemunculan teks satu per satu untuk Halaman 3
-            munculkanTeksBerurutan(['p5', 'p6', 'p7'], 0);
+            // Mulai ngetik Halaman 3 dari paragraf 5
+            mulaiKetikBerdasarUrutan(['p5', 'p6', 'p7'], 0, () => {});
         }
 
-        // Fungsi khusus untuk mengatur jeda kemunculan teks agar keluar bergantian
-        function munculkanTeksBerurutan(elementIds, index) {
-            if (index < elementIds.length) {
-                setTimeout(() => {
-                    const el = document.getElementById(elementIds[index]);
-                    if (el) {
-                        el.classList.add('visible');
-                        // Otomatis scroll ke bawah jika teksnya panjang di layar HP kecil
-                        el.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                    }
-                    munculkanTeksBerurutan(elementIds, index + 1);
-                }, 2500); // Teks akan muncul berurutan setiap jeda 2.5 detik sekali
+        // Fungsi canggih untuk mengetik per huruf secara berurutan
+        function ketikPerHuruf(elementId, text, speed, onComplete) {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            element.innerHTML = "";
+            
+            function mengetik() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    // Scroll otomatis ke bawah kartu saat teks memanjang di layar HP
+                    element.scrollIntoView({ behavior: 'auto', block: 'end' });
+                    setTimeout(mengetik, speed);
+                } else if (onComplete) {
+                    onComplete();
+                }
+            }
+            mengetik();
+        }
+
+        // Fungsi kontrol antrean paragraf agar tidak tabrakan
+        function mulaiKetikBerdasarUrutan(ids, index, finalCallback) {
+            if (index < ids.length) {
+                const currentId = ids[index];
+                // Kecepatan ngetik diset 45ms per huruf (kecepatan membaca normal yang estetik)
+                ketikPerHuruf(currentId, texts[currentId], 45, () => {
+                    // Jeda setengah detik sebelum lanjut ke paragraf berikutnya
+                    setTimeout(() => {
+                        mulaiKetikBerdasarUrutan(ids, index + 1, finalCallback);
+                    }, 500);
+                });
+            } else if (finalCallback) {
+                finalCallback();
             }
         }
-    </script>
-</body>
-</html>
