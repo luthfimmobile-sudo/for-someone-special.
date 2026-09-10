@@ -25,13 +25,17 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             text-align: center;
-            max-width: 320px;
+            max-width: 340px;
             width: 85%;
             border: 2px solid #ffb6c1;
             box-sizing: border-box;
+            max-height: 85vh;
+            overflow-y: auto;
         }
-        h1 { color: #ff4d6d; font-size: 22px; margin-top: 0; margin-bottom: 10px; font-weight: 700; }
-        p { color: #4a4a4a; line-height: 1.6; font-size: 14px; font-weight: 400; }
+        h1 { color: #ff4d6d; font-size: 22px; margin-top: 0; margin-bottom: 12px; font-weight: 700; }
+        p { color: #4a4a4a; line-height: 1.6; font-size: 14px; font-weight: 400; text-align: justify; }
+        .text-center { text-align: center; }
+        .iloveyou { color: #ff4d6d; font-weight: 700; text-align: center; font-size: 15px; margin-top: 15px; }
         input {
             width: 85%;
             padding: 12px;
@@ -59,64 +63,61 @@
             transition: 0.2s;
         }
         .hidden { display: none; }
-        #tombolNo {
-            background-color: #6c757d;
-            position: absolute;
-            transition: 0.1s ease;
-            z-index: 99;
-        }
         .heart { color: #ff4d6d; font-size: 45px; margin-bottom: 10px; }
-        .error-text { color: #ff4d6d; font-size: 12px; font-weight: 700; margin-top: -5px; }
+        .error-text { color: #ff4d6d; font-size: 12px; font-weight: 700; margin-top: -5px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <!-- Menggunakan link direct server luar yang sudah lolos enkripsi HTTPS GitHub -->
-<audio id="bgMusic" loop preload="auto">
-    <source src="https://r2.dev" type="audio/mpeg">
-</audio>
-
+    <!-- Link musik bypass HTTPS GitHub Pages -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://r2.dev" type="audio/mpeg">
+    </audio>
 
     <!-- Halaman 1: Fitur Password -->
     <div id="halaman1" class="card">
         <div class="heart">🔒</div>
         <h1>Eitss, Jawab Dulu! ✨</h1>
-        <p>Pertanyaan: Apa panggilan kesayangan kita?</p>
+        <p class="text-center">Pertanyaan: Apa panggilan kesayangan kita?</p>
         <input type="text" id="passwordInput" placeholder="Ketik jawabannya di sini...">
         <p id="pesanSalah" class="error-text hidden">Hayo... panggilannya salah! Inget-inget lagi 😜</p>
         <button onclick="cekPassword()">Masuk 💌</button>
     </div>
 
-    <!-- Halaman 2: Isi Surat (Terbuka setelah password benar) -->
-    <div id="halaman2" class="card hidden">
-        <h1>Dear Kamu 🌹</h1>
-        <p>Dari sekian banyak orang di dunia, entah kenapa mata dan hati gua cuma mau tertuju ke lu terus. Makasih ya udah hadir dan bikin hari-hari gua jadi lebih berwarna.</p>
-        <p><strong>Lu mau nggak jadi pacar gua? 🥺</strong></p>
+    <!-- Halaman 2: Isi Surat Pertama (Curhatan Kangen) -->
+    <div id="halaman2" class="card">
+        <h1>Dear Senggg 🌹</h1>
+        <p>Hai senggg gimana kabar kamu? baik-baik aja kan? gaada yang gangguin ketenangan kamu? kalo iya Alhamdulillah aku ikut seneng dengernya.</p>
+        <p>Maaf ya aku sampein nya disini karna aku gaenak mau chat kamu takut ngeganggu planning kamu atau apalah nantinya.</p>
+        <p>Aku cuma mau bilang aku kangen sama kamu , aku kangen denger suara kamu , aku kangen videocallan sama kamu dan aku kangen semuanya tentang kamu.</p>
+        <p>Menurut kamu salah ga sih yang aku rasain? kalo ga salah aku harus apa? aku udah gapunya akses lagi buat bisa tatapan muka sama kamu.</p>
         
-        <div style="height: 50px; position: relative; margin-top: 20px;">
-            <button onclick="terimaKasih()">Mau! 🥰</button>
-            <button id="tombolNo" ontouchstart="hindari()" onclick="hindari()">Nggak 😜</button>
+        <div class="text-center" style="margin-top: 20px;">
+            <button onclick="keHalamanTiga()">Lanjut ➡️</button>
         </div>
     </div>
 
-    <!-- Halaman 3: Penutup -->
+    <!-- Halaman 3: Kalimat Penutup Akhir -->
     <div id="halaman3" class="card hidden">
-        <div class="heart">💖</div>
-        <h1>Yeeeaaayyy! 🎉</h1>
-        <p>Makasih ya! Janji kita bakal bikin banyak momen seru bareng-bareng mulai hari ini. Love you! 😘</p>
+        <div class="heart">💝</div>
+        <h1>Isi Hatiku.. ✨</h1>
+        <p>Makasih ya udah baca isi hati aku dan aku minta maaf kalo aku kasih mengganggu kamu. Aku tarik kembali ucapan ku kemarin yang mau jaga jarak sama kamu kayaknya aku kalah sama ego ku sendiri dan masih berharap bisa berinteraksi sama kamu dan jadi sosok aku yang biasanya buat kamu ya at least sampe hari terbaiknya kamu.</p>
+        <p>Kalo menurut kamu aku masih bisa buat interaksi sama kamu tolong vc aku ya.</p>
+        <p class="iloveyou">ILOVEYOU SO MUCH WANITA TERBAIK KU. 💖</p>
     </div>
 
     <script>
+        // Menyembunyikan halaman 2 di awal agar terproteksi password
+        document.getElementById('halaman2').classList.add('hidden');
+
         function cekPassword() {
             const input = document.getElementById('passwordInput').value.trim().toLowerCase();
             const music = document.getElementById('bgMusic');
             
             if (input === 'seng') {
-                // Trik paksa aktifkan audio di browser HP lewat interaksi klik user
                 music.play().then(() => {
                     console.log("Musik sukses berputar!");
                 }).catch(error => {
-                    console.log("Dicoba putar ulang jika diblokir:", error);
                     music.muted = false;
                     music.play();
                 });
@@ -128,17 +129,9 @@
             }
         }
 
-        function terimaKasih() {
+        function keHalamanTiga() {
             document.getElementById('halaman2').classList.add('hidden');
             document.getElementById('halaman3').classList.remove('hidden');
-        }
-
-        function hindari() {
-            const btnNo = document.getElementById('tombolNo');
-            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 30);
-            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 30);
-            btnNo.style.left = x + 'px';
-            btnNo.style.top = y + 'px';
         }
     </script>
 </body>
