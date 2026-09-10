@@ -18,10 +18,10 @@
             overflow: hidden;
             position: relative;
         }
-        /* Efek hujan hati berjatuhan di latar belakang */
+        /* Mengunci posisi efek hujan hati agar selalu berada di latar paling belakang */
         .falling-heart {
             position: absolute;
-            color: rgba(255, 77, 109, 0.4);
+            color: rgba(255, 77, 109, 0.45);
             font-size: 14px;
             pointer-events: none;
             z-index: 1;
@@ -34,26 +34,24 @@
             100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
         }
         .card {
-            background: rgba(18, 12, 14, 0.75);
+            background: rgba(18, 12, 14, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 35px 25px;
             border-radius: 30px;
-            /* Garis tepi luar gradasi neon pink lembut */
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.12), 
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15), 
                         inset 0 0 20px rgba(255, 182, 193, 0.02);
             text-align: center;
             max-width: 350px;
             width: 85%;
-            border: 1px solid rgba(255, 77, 109, 0.25);
+            border: 1px solid rgba(255, 77, 109, 0.3);
             box-sizing: border-box;
             max-height: 80vh;
             overflow-y: auto;
             color: #f7e6e9;
-            z-index: 10;
+            z-index: 999;
             position: relative;
         }
-        /* Mengubah scrollbar agar minimalis dan cocok dengan tema hitam */
         .card::-webkit-scrollbar { width: 4px; }
         .card::-webkit-scrollbar-thumb { background: rgba(255, 77, 109, 0.3); border-radius: 10px; }
         
@@ -118,7 +116,6 @@
         }
         button:active {
             transform: scale(0.95);
-            box-shadow: 0 2px 8px rgba(255, 77, 109, 0.4);
         }
         .hidden { display: none !important; }
         .heart-icon { 
@@ -209,10 +206,8 @@
                 document.getElementById('halaman1').classList.add('hidden');
                 document.getElementById('halaman2').classList.remove('hidden');
                 
-                // Mulai memunculkan hujan hati di latar belakang
                 mulaiHujanHati();
                 
-                // Mulai mengetik Halaman 2
                 mulaiKetikBerdasarUrutan(['p1', 'p2', 'p3', 'p4'], 0, () => {
                     document.getElementById('btnContainer1').classList.remove('hidden');
                     const card = document.getElementById('halaman2');
@@ -235,3 +230,10 @@
             element.innerHTML = "";
             const card = element.closest('.card');
             
+            function mengetik() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    if (card) {
+                        card.scrollTo({ top: card.scrollHeight, behavior: 'auto' });
+                    }
