@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ada Surat Buat Kamu ❤️</title>
+    <!-- Memanggil font Poppins agar tampilan font bulat estetik di HP -->
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            /* Menggunakan gambar ImgBB pilihanmu sebagai background website */
             background: linear-gradient(rgba(255, 228, 225, 0.75), rgba(255, 182, 193, 0.75)), 
                         url('https://co.com') no-repeat center center fixed;
             background-size: cover;
@@ -19,80 +20,82 @@
             overflow: hidden;
         }
         .card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 25px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             text-align: center;
-            max-width: 400px;
-            width: 90%;
-            transition: all 0.5s ease;
+            max-width: 320px;
+            width: 85%;
             border: 2px solid #ffb6c1;
+            z-index: 20;
         }
-        h1 { color: #ff4d6d; font-size: 24px; margin-bottom: 10px; }
-        p { color: #4a4a4a; line-height: 1.6; font-size: 15px; }
+        h1 { color: #ff4d6d; font-size: 22px; margin-top: 0; margin-bottom: 10px; font-weight: 700; }
+        p { color: #4a4a4a; line-height: 1.6; font-size: 14px; font-weight: 400; }
+        input {
+            width: 80%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 2px solid #ffb6c1;
+            border-radius: 25px;
+            text-align: center;
+            outline: none;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
         button {
             background-color: #ff4d6d;
             color: white;
             border: none;
             padding: 12px 24px;
-            font-size: 16px;
+            font-size: 15px;
             border-radius: 25px;
             cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
+            font-weight: 700;
             margin: 10px;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 6px rgba(255, 77, 109, 0.2);
         }
-        button:hover { transform: scale(1.1); background-color: #ff758f; }
         .hidden { display: none; }
         #tombolNo {
             background-color: #6c757d;
             position: absolute;
-            transition: 0.15s ease;
-            z-index: 10;
+            transition: 0.1s ease;
+            z-index: 30;
         }
-        .heart {
-            color: #ff4d6d;
-            font-size: 50px;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
+        .heart { color: #ff4d6d; font-size: 45px; margin-bottom: 10px; }
+        .error-text { color: #ff4d6d; font-size: 12px; font-weight: 700; margin-top: -5px; }
+        #videoYoutube { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- Musik Latar (Akan dimainkan otomatis via JS saat tombol diklik) -->
-    <!-- Catatan: Ganti src di bawah dengan link file .mp3 lagu Raim Laode - Menari-nari milikmu jika sudah siap online -->
-    <audio id="bgMusic" loop>
-        <source src="menari-nari.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Wadah Pemutar YouTube Tersembunyi -->
+    <div id="videoYoutube"></div>
 
-    <!-- Halaman Utama (Amplop) -->
+    <!-- Halaman 1: Fitur Password -->
     <div id="halaman1" class="card">
-        <div class="heart">❤️</div>
-        <h1>Hai Kamu! ✨</h1>
-        <p>Ada sebuah surat kecil yang mau gua sampein ke lu. Mau dibuka?</p>
-        <button onclick="bukaSurat()">Buka Surat 💌</button>
+        <div class="heart">🔒</div>
+        <h1>Eitss, Jawab Dulu! ✨</h1>
+        <p>Pertanyaan: Apa panggilan kesayangan kita?</p>
+        <input type="text" id="passwordInput" placeholder="Ketik jawabannya di sini...">
+        <p id="pesanSalah" class="error-text hidden">Hayo... panggilannya salah! Inget-inget lagi 😜</p>
+        <button onclick="cekPassword()">Masuk 💌</button>
     </div>
 
-    <!-- Halaman Isi Surat -->
+    <!-- Halaman 2: Isi Surat (Terbuka setelah password benar) -->
     <div id="halaman2" class="card hidden">
-        <h1>Dear [Nama Dia] 🌹</h1>
+        <h1>Dear Kamu 🌹</h1>
         <p>Dari sekian banyak orang di dunia, entah kenapa mata dan hati gua cuma mau tertuju ke lu terus. Makasih ya udah hadir dan bikin hari-hari gua jadi lebih berwarna.</p>
         <p><strong>Lu mau nggak jadi pacar gua? 🥺</strong></p>
         
-        <div style="height: 60px; position: relative; margin-top: 20px;">
+        <div style="height: 50px; position: relative; margin-top: 20px;">
             <button onclick="terimaKasih()">Mau! 🥰</button>
-            <button id="tombolNo" onmouseover="hindari()" onclick="hindari()">Nggak 😜</button>
+            <button id="tombolNo" ontouchstart="hindari()" onclick="hindari()">Nggak 😜</button>
         </div>
     </div>
 
-    <!-- Halaman Akhir -->
+    <!-- Halaman 3: Penutup -->
     <div id="halaman3" class="card hidden">
         <div class="heart">💖</div>
         <h1>Yeeeaaayyy! 🎉</h1>
@@ -100,13 +103,40 @@
     </div>
 
     <script>
-        function bukaSurat() {
-            // Memutar lagu Raim Laode saat surat dibuka
-            const music = document.getElementById('bgMusic');
-            music.play().catch(error => console.log("Musik butuh interaksi user pertamakali:", error));
+        // Memuat Script API YouTube Resmi secara otomatis
+        var tag = document.createElement('script');
+        tag.src = "https://youtube.com";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-            document.getElementById('halaman1').classList.add('hidden');
-            document.getElementById('halaman2').classList.remove('hidden');
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('videoYoutube', {
+                height: '0',
+                width: '0',
+                videoId: 'U-fT05AcoQ4', // ID Video Lagu Resmi Raim Laode - Menari-nari
+                playerVars: {
+                    'autoplay': 0,
+                    'loop': 1,
+                    'playlist': 'U-fT05AcoQ4'
+                }
+            });
+        }
+
+        function cekPassword() {
+            const input = document.getElementById('passwordInput').value.trim().toLowerCase();
+            
+            if (input === 'seng') {
+                // Begitu tombol diklik, perintahkan server YouTube memutar lagu
+                if(player && typeof player.playVideo === 'function') {
+                    player.playVideo();
+                }
+                
+                document.getElementById('halaman1').classList.add('hidden');
+                document.getElementById('halaman2').classList.remove('hidden');
+            } else {
+                document.getElementById('pesanSalah').classList.remove('hidden');
+            }
         }
 
         function terimaKasih() {
@@ -116,10 +146,8 @@
 
         function hindari() {
             const btnNo = document.getElementById('tombolNo');
-            // Membuat tombol "Nggak" kabur secara acak di dalam area layar browser
-            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 40);
-            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 40);
-            
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 30);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 30);
             btnNo.style.left = x + 'px';
             btnNo.style.top = y + 'px';
         }
