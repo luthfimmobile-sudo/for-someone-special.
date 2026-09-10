@@ -18,7 +18,7 @@
             overflow: hidden;
         }
         .card {
-            background: rgba(20, 15, 17, 0.85);
+            background: rgba(20, 15, 17, 0.95);
             backdrop-filter: blur(15px);
             padding: 35px 25px;
             border-radius: 25px;
@@ -93,7 +93,7 @@
         button:active {
             transform: scale(0.95);
         }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         .heart { 
             color: #ff4d6d; 
             font-size: 45px; 
@@ -116,7 +116,7 @@
         <source src="menari-nari.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Halaman 1: Fitur Password -->
+    <!-- Halaman 1: Fitur Password (Kembali Normal & Centered) -->
     <div id="halaman1" class="card">
         <div class="heart">🔒</div>
         <h1>Eitss, Jawab Dulu! ✨</h1>
@@ -127,7 +127,7 @@
     </div>
 
     <!-- Halaman 2: Isi Surat Pertama (Curhatan Kangen) -->
-    <div id="halaman2" class="card">
+    <div id="halaman2" class="card hidden">
         <h1>Dear Senggg 🌹</h1>
         <div class="typewriter-container">
             <p class="typewriter-p" id="p1"></p>
@@ -152,12 +152,9 @@
     </div>
 
     <script>
-        document.getElementById('halaman2').classList.add('hidden');
-
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
 
-        // Teks asli yang akan diketik per huruf
         const texts = {
             p1: "Hai senggg gimana kabar kamu? baik-baik aja kan? gaada yang gangguin ketenangan kamu? kalo iya Alhamdulillah aku ikut seneng dengernya.",
             p2: "Maaf ya aku sampein nya disini karna aku gaenak mau chat kamu takut ngeganggu planning kamu atau apalah nantinya.",
@@ -184,10 +181,11 @@
                 document.getElementById('halaman1').classList.add('hidden');
                 document.getElementById('halaman2').classList.remove('hidden');
                 
-                // Mulai ngetik Halaman 2 dari paragraf 1
+                // Mulai ngetik Halaman 2 dari paragraf 1 secara aman
                 mulaiKetikBerdasarUrutan(['p1', 'p2', 'p3', 'p4'], 0, () => {
                     document.getElementById('btnContainer1').classList.remove('hidden');
-                    document.getElementById('btnContainer1').scrollIntoView({ behavior: 'smooth', block: 'end' });
+                    const card = document.getElementById('halaman2');
+                    card.scrollTo({ top: card.scrollHeight, behavior: 'smooth' });
                 });
             } else {
                 document.getElementById('pesanSalah').classList.remove('hidden');
@@ -197,23 +195,24 @@
         function keHalamanTiga() {
             document.getElementById('halaman2').classList.add('hidden');
             document.getElementById('halaman3').classList.remove('hidden');
-            
-            // Mulai ngetik Halaman 3 dari paragraf 5
             mulaiKetikBerdasarUrutan(['p5', 'p6', 'p7'], 0, () => {});
         }
 
-        // Fungsi canggih untuk mengetik per huruf secara berurutan
         function ketikPerHuruf(elementId, text, speed, onComplete) {
             let i = 0;
             const element = document.getElementById(elementId);
             element.innerHTML = "";
             
+            // Mencari container card terdekat agar scroll tidak merusak layout global halaman utama
+            const card = element.closest('.card');
+            
             function mengetik() {
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
                     i++;
-                    // Scroll otomatis ke bawah kartu saat teks memanjang di layar HP
-                    element.scrollIntoView({ behavior: 'auto', block: 'end' });
+                    if (card) {
+                        card.scrollTo({ top: card.scrollHeight, behavior: 'auto' });
+                    }
                     setTimeout(mengetik, speed);
                 } else if (onComplete) {
                     onComplete();
@@ -222,13 +221,10 @@
             mengetik();
         }
 
-        // Fungsi kontrol antrean paragraf agar tidak tabrakan
         function mulaiKetikBerdasarUrutan(ids, index, finalCallback) {
             if (index < ids.length) {
                 const currentId = ids[index];
-                // Kecepatan ngetik diset 45ms per huruf (kecepatan membaca normal yang estetik)
                 ketikPerHuruf(currentId, texts[currentId], 45, () => {
-                    // Jeda setengah detik sebelum lanjut ke paragraf berikutnya
                     setTimeout(() => {
                         mulaiKetikBerdasarUrutan(ids, index + 1, finalCallback);
                     }, 500);
@@ -237,3 +233,6 @@
                 finalCallback();
             }
         }
+    </script>
+</body>
+</html>
