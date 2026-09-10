@@ -15,29 +15,25 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             background-color: #ffe5ec;
+            position: relative;
         }
 
-        /* --- 🎞️ BACKGROUND VIDEO SHORTS FULLSCREEN --- */
-        .video-background {
+        /* --- 📸 BACKGROUND FOTO DARI IMGBB LU --- */
+        .photo-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-            display: none; /* Sembunyi total di awal */
-        }
-        .video-background iframe {
-            width: 100vw;
-            height: 100vh;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1.4);
+            background-image: url('https://ibb.co'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: none; 
         }
 
+        /* Lapisan gelap transparan di atas foto agar teks surat gampang dibaca */
         .overlay {
             position: fixed;
             top: 0;
@@ -46,7 +42,7 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.55); 
             z-index: 0;
-            display: none; /* Sembunyi total di awal */
+            display: none; 
         }
 
         .container {
@@ -64,7 +60,7 @@
             transition: transform 0.3s ease;
             display: block;
             position: relative;
-            z-index: 20; /* Berada paling atas agar langsung sensitif pas diklik */
+            z-index: 20; 
         }
         .envelope-wrapper:hover {
             transform: scale(1.05);
@@ -122,7 +118,7 @@
         /* --- 3. TAMPILAN SURAT --- */
         .letter-card {
             display: none;
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.9);
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -166,10 +162,8 @@
 </head>
 <body>
 
-    <!-- Video Background Container -->
-    <div class="video-background" id="videoBgContainer">
-        <iframe id="shortsVideo" src="https://youtube.com" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-    </div>
+    <!-- Container Background Foto Lu & Overlay Kegelapan Teks -->
+    <div class="photo-background" id="photoBgContainer"></div>
     <div class="overlay" id="videoOverlay"></div>
 
     <div class="container">
@@ -195,15 +189,13 @@
         </div>
     </div>
 
-    <!-- AUDIO LAGU (Raim Laode - Menari-nari) -->
+    <!-- 🎵 MP3 RESMI (Raim Laode - Menari-nari) -->
     <audio id="bgMusic" src="https://catbox.moe" loop></audio>
 
     <script>
-        // Kunci jawaban dan teka-teki
         const passwordBenar = "seng"; 
         const cluePertanyaan = "apa panggilan sayang kita"; 
         
-        // Teks isi surat jujur lu
         const pesanCinta = "Hai seng jujur aja aku masih belom siap buat lupain kamu kata orang sih buat move-on butuh waktu , mungkin iya butuh waktu dan aku gatau kapan waktunya. \n\nAku minta maaf ya kalo semisalnya aku masih belom bisa lupain kamu dan move-on dari kamu padahal kamu lagi persiapan buat ke jenjang yang lebih serius sama dia. \n\nAku salah ga sih kalo bilang aku kangen banget sama kamu? dan ya aku kangen sama kamu tapi disatu sisi aku juga gamau sampe ngeganggu kamu yang ngebuat hancur persiapan kalian berdua. \n\nAku harus apa ya? kamu ada saran kah? aku kangen kita video call lagi walaupun ga ngobrol. sekarang waktu yang biasanya kita pakai buat Videocall aku isi dengan kegabutan setiap hari kayak gitu hehe. \n\ntolong bantu kasih jawabannya ya buat aku apapun jawaban dari kamu pasti aku terima.";
 
         document.getElementById('clueText').innerText = cluePertanyaan;
@@ -216,21 +208,16 @@
         function checkPassword() {
             const inputUser = document.getElementById('passwordInput').value.trim().toLowerCase();
             const music = document.getElementById('bgMusic');
-            const videoIframe = document.getElementById('shortsVideo');
 
             if (inputUser === passwordBenar.toLowerCase()) {
                 document.getElementById('passwordSection').style.display = 'none';
                 
-                // Memunculkan video kebersamaan & lagu latar belakang
-                document.getElementById('videoBgContainer').style.display = 'block';
+                // Munculkan foto kalian berdua dari ImgBB
+                document.getElementById('photoBgContainer').style.display = 'block';
                 document.getElementById('videoOverlay').style.display = 'block';
                 
-                if(videoIframe) {
-                    videoIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                }
-
-                // Putar lagu Raim Laode otomatis setelah klik tombol gembok
-                music.play().catch(error => console.log("Musik diblokir oleh kebijakan privasi browser: ", error));
+                // MAINKAN LAGU (Lagu Raim Laode langsung bunyi otomatis)
+                music.play().catch(error => console.log("Musik diblokir browser: ", error));
 
                 const letter = document.getElementById('letterSection');
                 letter.style.display = 'block';
@@ -253,10 +240,9 @@
                     document.getElementById("typingTarget").innerHTML += char;
                 }
                 index++;
-                setTimeout(typeWriter, 55); // Efek ketikan puitis
+                setTimeout(typeWriter, 55);
             }
         }
     </script>
 </body>
-    </html>
-    
+</html>
