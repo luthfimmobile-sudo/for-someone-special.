@@ -17,7 +17,7 @@
             background-color: #ffe5ec;
         }
 
-        /* --- BACKGROUND VIDEO SHORTS FULLSCREEN --- */
+        /* --- 🎞️ BACKGROUND VIDEO SHORTS FULLSCREEN --- */
         .video-background {
             position: fixed;
             top: 0;
@@ -45,7 +45,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5); 
+            background: rgba(0, 0, 0, 0.55); 
             z-index: 0;
             display: none;
         }
@@ -118,7 +118,7 @@
         /* --- 3. TAMPILAN SURAT --- */
         .letter-card {
             display: none;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -174,6 +174,8 @@
             50% { opacity: 1; }
         }
     </style>
+    <!-- Script YouTube dipindahkan ke atas agar load duluan -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
@@ -208,20 +210,17 @@
     </div>
 
     <!-- AUDIO LAGU (Raim Laode - Menari-nari) -->
-    <audio id="bgMusic" src="https://files.catbox.moe/u5wovs.mp3" loop></audio>
-
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <audio id="bgMusic" src="https://catbox.moe" loop></audio>
 
     <script>
         // ==========================================
-        // ⚙️ WAJIB LU INPUT NOMOR WA LU DI SINI ⚙️
+        // ⚙️ INPUT NOMOR WA LU DI SINI ⚙️
         // ==========================================
-        const nomorWA = "6285945757804"; // <-- GANTI PAKAI NOMOR WA LU (Awali angka 62)
+        const nomorWA = "6281234567890"; // <-- GANTI DENGAN NOMOR WA LU (Awali angka 62)
         
-        // ID Video Shorts lu (Sudah otomatis terpasang)
+        // ID Video Shorts lu (Sudah terkunci otomatis)
         const youtubeVideoId = "VXtoi0WnjK4"; 
         
-        // Pengaturan gembok gembira
         const passwordBenar = "seng"; 
         const cluePertanyaan = "apa panggilan sayang kita"; 
         const pesanBalasanWA = "Aku udah baca semua suratnya, seng...";
@@ -243,7 +242,8 @@
                     'playlist': youtubeVideoId,
                     'modestbranding': 1,
                     'rel': 0,
-                    'showinfo': 0
+                    'showinfo': 0,
+                    'playsinline': 1 // Penting untuk mobile browser
                 }
             });
         }
@@ -285,4 +285,3 @@
             if (index < pesanCinta.length) {
                 let char = pesanCinta.charAt(index);
                 if (char === "\n") {
-                    document.getElementById("typingTarget").innerHTML += "<br>";
