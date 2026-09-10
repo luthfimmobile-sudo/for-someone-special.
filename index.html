@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -69,8 +69,9 @@
 </head>
 <body>
 
-    <!-- Memanggil langsung file lagu dari folder GitHub kamu -->
-    <audio id="bgMusic" loop preload="auto">
+    <!-- Link musik CDN stabil dengan mekanisme pemulihan ganda -->
+    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+        <source src="https://archive.org" type="audio/mpeg">
         <source src="menari-nari.mp3" type="audio/mpeg">
     </audio>
 
@@ -109,15 +110,28 @@
     <script>
         document.getElementById('halaman2').classList.add('hidden');
 
+        // Menggunakan Web Audio API terpadu agar suara dipaksa meluncur saat tombol ditekan
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
         function cekPassword() {
             const input = document.getElementById('passwordInput').value.trim().toLowerCase();
             const music = document.getElementById('bgMusic');
             
             if (input === 'seng') {
-                // Memaksa browser HP memutar audio lokal setelah interaksi klik password
+                // Mengaktifkan konteks audio browser mobile secara paksa
+                if (!audioCtx) {
+                    audioCtx = new AudioContext();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                // Jalankan musik utama dengan fallback
                 music.play().then(() => {
                     console.log("Musik sukses berputar!");
                 }).catch(error => {
+                    console.log("Mencoba alternatif audio internal...");
                     music.muted = false;
                     music.play();
                 });
@@ -136,3 +150,4 @@
     </script>
 </body>
 </html>
+    
