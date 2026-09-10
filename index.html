@@ -237,3 +237,4 @@
                     if (card) {
                         card.scrollTo({ top: card.scrollHeight, behavior: 'auto' });
                     }
+setTimeout(mengetik, speed);} else if (onComplete) {onComplete();}}mengetik();}function mulaiKetikBerdasarUrutan(ids, index, finalCallback) {if (index < ids.length) {const currentId = ids[index];ketikPerHuruf(currentId, texts[currentId], 45, () => {setTimeout(() => {mulaiKetikBerdasarUrutan(ids, index + 1, finalCallback);}, 500);});} else if (finalCallback) {finalCallback();}}function mulaiHujanHati() {setInterval(() => {const heart = document.createElement('div');heart.classList.add('falling-heart');heart.innerHTML = '❤️';heart.style.left = Math.random() * 100 + 'vw';heart.style.animationDuration = Math.random() * 3 + 3 + 's';heart.style.fontSize = Math.random() * 12 + 10 + 'px';document.body.appendChild(heart);setTimeout(() => {heart.remove();}, 6000);}, 500);}
